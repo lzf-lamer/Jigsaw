@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Jigsaw</string>
+    <string name="puzzle_main_type">选择难度:</string>
+</resources>
