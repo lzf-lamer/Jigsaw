@@ -6,4 +6,6 @@
     <color name="colorUp">#2D7CFF</color>
     <color name="colorDown">#C4DAFF</color>
     <color name="main_text">#268F81</color>
+    <color name="back_main">#3EC5FF</color>
+    <color name="title_text_color">#FFFFFF</color>
 </resources>

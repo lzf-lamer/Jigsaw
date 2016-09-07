@@ -1,5 +1,6 @@
 package wonder.com.jigsaw.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupWindow;
 
@@ -25,6 +27,10 @@ import wonder.com.jigsaw.util.ScreenUtils;
  */
 public class MainActivity extends AppCompatActivity {
 
+    //返回值:图库
+    private static final int RESULT_IMAGE = 100;
+    //返回值:相机
+    private static final int RESULT_CAMERA = 200;
     private PopupWindow mPopupWindow;
     private View mPopupView;
     // GridView 显示图片
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Bitmap> mPicList;
     // 主页图片资源ID
     private int[] mResPicId;
+    // 游戏类型N*N
+    private int mType = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
         // 数据适配器
         mGvPicList.setAdapter(new GridPicListAdapter(
                 MainActivity.this, mPicList));
+        //Item监听事件
+        mGvPicList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i==mResPicId.length-1)
+                {
+                    //选择本地图库 相机
+                    showDialogCustom();
+                }else
+                {
+                    //选择默认图片
+                    Intent intent = new Intent(
+                            MainActivity.this,
+                            PuzzleMain.class);
+                    intent.putExtra("picSelectedID",mResPicId[i]);
+                    intent.putExtra("mType",mType);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
     /**
      * 显示Popup Window
@@ -78,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.pic1,R.drawable.pic2,R.drawable.pic3,
                 R.drawable.pic4,R.drawable.pic5,R.drawable.pic6,
                 R.drawable.pic7,R.drawable.pic8,R.drawable.pic9,
-                R.drawable.pic10,R.drawable.pic11,R.drawable.pic12,
-                R.drawable.pic13,R.drawable.pic14,R.drawable.pic15,
-                R.drawable.pic16};
+                R.drawable.pic10,R.drawable.pic11,R.drawable.pic13,
+                R.drawable.pic14,R.drawable.pic15,R.drawable.pic16,
+                R.mipmap.ic_launcher};
         Bitmap[] bitmaps = new Bitmap[mResPicId.length];
         for(int i=0;i<bitmaps.length;i++)
         {
